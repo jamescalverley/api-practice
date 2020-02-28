@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <title>Form</title>
+</head>
+<body>
+
+    <div class="jumbotron">
+        <h1 class="display-4">Form</h1>
+        <p class="lead">Enter your favourite food:</p>
+        <hr class="my-4">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Favourite Food</label>
+            <input type="text" class="form-control" id="favFoodName" aria-describedby="emailHelp" placeholder="Enter favourite food">
+            <hr class="my-4">
+            <button id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    
+        <p class="lead">
+          <hr class="my-4">
+          <a class="btn btn-secondary btn-lg" href="/list.html" role="button">View List</a>
+        </p>
+      </div>
+
+      <script>
+            $('#submitBtn').click( async function( event ){
+              event.preventDefault();
+              console.log("button clicked")
+
+              let data = { name: $('#favFoodName').val()};
+              console.log(data);
+
+              const response = await $.post('/api/foodlist', data );
+              console.log(response)
+
+
+            });
+
+           
+
+
+      </script>
+    
+</body>
+</html>

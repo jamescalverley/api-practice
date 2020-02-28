@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <title>List</title>
+</head>
+<body>
+
+    <div class="jumbotron">
+        <h1 class="display-4">List Page</h1>
+        <p class="lead">Here is the list of favourite foods:</p>
+        <hr class="my-4">
+    
+        <p class="lead">
+          <a class="btn btn-secondary btn-lg" href="/index.html" role="button">Home</a>
+        </p>
+    </div>
+
+
+    <div id="foodList" class="card">
+      <div class="card-body">
+      </div>
+    </div>
+
+    
+
+      <script>
+
+        $.get('api/foodlist', function(res){
+          res.forEach(function(foods){
+            $('#foodList').append(`
+            <div class="card-body">
+            ${foods.name}</div>`
+            );
+          })
+        });
+       
+        
+      </script>
+    
+</body>
+</html>
