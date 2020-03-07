@@ -69,12 +69,12 @@
 
       async function displayCardData(){
         $.get('api/person-data-list', function(res){
-          res.forEach(function(personData){
+          res.forEach(function( data ){
             $('#cardWrapper').append(`
             <div class="card" style="width: 18rem;">
               <div class="card-body">
-                <h5 id="cardName" class="card-title">${personData.firstName}&nbsp${personData.lastName}</h5>
-                <p id="cardLocation" class="card-text">${personData.location}</p>
+                <h5 id="cardName" class="card-title">${data.first_name}&nbsp${data.last_name}</h5>
+                <p id="cardLocation" class="card-text">${data.location}</p>
               </div>
             </div>
             `)}

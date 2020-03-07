@@ -13,6 +13,8 @@
 // add delete button
 // add to Heruko
 
+//? bonus
+// add email >> create new column , create new form
 
 const express = require('express');
 
@@ -23,6 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static('html'));
+
+const orm = require( './orm' );
 
 const personData = [
     { 
@@ -40,19 +44,40 @@ const personData = [
         lastName: "Obama",
         location: "Washington"  
     }
-
 ];
 
-app.get('/api/person-data-list', function( req, res ){
-    res.send(personData);
+// using hardcoded array
+// app.get('/api/person-data-list', function( req, res ){
+//     res.send(personData);
+// });
+
+//*using mySQL
+
+app.get('/api/person-data-list', async function( req, res ){
+    console.log("getting data from database");
+    const displayContacts = await orm.displayContacts();
+    console.log("[DATA]", displayContacts);
+    
+    res.send(displayContacts);
 });
 
-app.post('/api/person-data', function( req, res){
-    console.log(req.body);
-    personData.push(req.body);
-    console.log(personData)
-    res.send(personData);
+
+// using hardcoded array
+// app.post('/api/person-data', function( req, res){
+//     console.log(req.body);
+//     personData.push(req.body);
+//     console.log(personData)
+//     res.send(personData);
+// })
+
+//* using mySQL
+
+app.post('/api/person-data', async function( req, res){
+    console.log("[POST received]", req.body)
+    await orm.createContact( req.body );
+    res.send({ message: `New contact created: ${req.body.firstName} ${req.body.lastName}`});
 })
+
 
 app.listen(PORT, function(){
     console.log("Server is runnning...PORT: " + PORT)
