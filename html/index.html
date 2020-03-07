@@ -8,20 +8,91 @@
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/style.css">
     <title>Home</title>
 </head>
-<body>
-
+  <body>
     <div class="jumbotron">
-        <h1 class="display-4">Home Page</h1>
-        <p class="lead">This is the home page.</p>
-        <hr class="my-4">
+      <h1 class="display-4">Add information</h1>
+      <hr class="my-1">
+        <form>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" aria-describedby="firstName" placeholder="Enter your first name">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" aria-describedby="lastName" placeholder="Enter your last name">
+            <label for="firstName">Location</label>
+            <input type="text" class="form-control" id="location" aria-describedby="location" placeholder="Enter your location">
+            <hr class="my-4">
+            <button id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+    </div>
     
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="/form.html" role="button">Add Item</a>
-          <a class="btn btn-secondary btn-lg" href="/list.html" role="button">View List</a>
-        </p>
-      </div>
-    
-</body>
+    <div id="cardWrapper">
+      <!-- <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 id="cardName" class="card-title"></h5>
+          <p id="cardLocation" class="card-text"></p>
+        </div>
+      </div> -->
+    </div>
+  
+    <script>
+      // on click >> save data in forms
+
+      async function getFormData(){
+        $('#submitBtn').click( async function(e){
+          e.preventDefault();
+          console.log("button clicked")
+          let data = { 
+            firstName: $('#firstName').val(),
+            lastName: $('#lastName').val(),
+            location: $('#location').val()
+          };
+          console.log("[form data]", data);
+
+        // api post 
+          const response = await $.post('/api/person-data', data );
+          console.log(response)
+        
+        // clears forms
+          $('#firstName').val("");
+          $('#lastName').val("");
+          $('#location').val("");
+
+        //displays all on the cards on the click of the submit button
+          //displayCardData()
+        });
+      };
+      getFormData();
+
+      async function displayCardData(){
+        $.get('api/person-data-list', function(res){
+          res.forEach(function(personData){
+            $('#cardWrapper').append(`
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 id="cardName" class="card-title">${personData.firstName}&nbsp${personData.lastName}</h5>
+                <p id="cardLocation" class="card-text">${personData.location}</p>
+              </div>
+            </div>
+            `)}
+        )})
+      };
+
+      async function hello(){
+        console.log("the page has loaded");
+      };
+
+      // on page load
+      $(document).ready( async function pageLoad(){
+        hello();
+        displayCardData();
+        //getFormData();
+      });
+
+    </script>
+      
+  </body>
 </html>

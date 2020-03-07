@@ -1,0 +1,13 @@
+#cardWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+
+}
+
+.card {
+    margin: 5px;
+}
+
+
